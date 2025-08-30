@@ -12,7 +12,7 @@ var initializedthis:Bool = false;
 var bed:FunkinSprite;
 var bedHB:FlxSprite;
 var cutscene:Array = [];
-var skipcutscene = true;
+var skipcutscene = false;
 var goingtoSleep = false;
 
 function create(){

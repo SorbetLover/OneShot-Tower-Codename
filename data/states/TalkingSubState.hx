@@ -13,7 +13,12 @@ var boxVis:Bool = true;
 var WMTextVis:Bool = false;
 var WMText:FlxText;
 var game:ModState;
+var bg:FlxSprite;
 function create(){
+    bg = new FlxSprite().makeGraphic(4000,4000,0xFF000000);
+    add(bg);
+    bg.scrollFactor.set(0,0);
+    bg.alpha = 0.001;
     game = cast FlxG.state;
     // game.members[2].angle += 10;
     theDialog = data.dianumber;
@@ -40,8 +45,15 @@ function create(){
     face = new FunkinSprite();
     face.frames = Paths.getSparrowAtlas("faces/niko");
     add(face);
+
     face.scale.set(1.9,1.9);
+
     face.y = f.y + face.height /2 + 12;
+    if(data.dianumber == 2){
+        face.loadGraphic(Paths.image("faces/alloy"));
+        face.scale.set(2.1,2.1);
+        face.y -= 5;
+    }
     face.x = 1020;
     face.scrollFactor.set(0,0);
     face.animation.addByPrefix("idle", "idle", 1);
@@ -64,11 +76,12 @@ function create(){
     WMText.font = Paths.font("TerminusTTF-Bold.ttf");
     WMText.alpha = 0.001;
     
-    if(data.dianumber == 1){
+    if(data.dianumber == 1 || data.dianumber == 2){
         boxVis = false;
         box.alpha = 0.01;
         f.alpha = 0.01;
         face.alpha = 0.01;
+        bg.alpha = 0.7;
     }
 
     
@@ -78,7 +91,7 @@ var lastSpace:Bool = false;
 
 var currentDialog:Int = 0;
 var doinText:Bool = false;
-var name:String = "Alloy";
+var name:String = "Player";
 
 //////////////  face, text, pause time, has line break, boxVisible 
 var theDialogues = [ 
@@ -130,6 +143,20 @@ var theDialogues = [
                 [3, "...", 0.5, false,true],
                 ["end"]
 
+        ],
+        [
+                [-1, "And as for you, " + name + "..."],
+                [-1, "We're done here."],
+                [-1, "Please don't return to this world anymore."],
+                [-100, "", 1,false,false],
+                [-100, "... ello",1, false,true],
+                [-100, "This is just a placeholder... lmao", 1, false, true],
+                [-100, "I hate dusan nemec", 1, false, true],
+                [-100, "hah", 1, false, true],
+                [-100, "hah hah", 1, false, true],
+                [-100, "hah hah hah", 1, false, true],
+
+                ["end"]
         ]
 ];
 function event(ee){
@@ -160,7 +187,7 @@ function theDialogueThing(){
     if(theDialogues[data.dianumber][currentDialog][0] == "end"){
         close();
     }
-    if(theDialogues[data.dianumber][currentDialog][0] >= 0) {    
+    if(theDialogues[data.dianumber][currentDialog][0] >= 0 || theDialogues[data.dianumber][currentDialog][0] == -100  ) {    
                 textSound.play(true);
     
             WMTextVis = false;
@@ -174,7 +201,7 @@ function theDialogueThing(){
             } else {
                 boxVis = true;
             }
-            face.animation.curAnim.curFrame = theDialogues[data.dianumber][currentDialog][0];
+            if(data.dianumber != 2) face.animation.curAnim.curFrame = theDialogues[data.dianumber][currentDialog][0];
             text.start(0.02, true, false, {}, function(){
                 doinText = false;
             });
@@ -193,7 +220,9 @@ function theDialogueThing(){
     }
 }
 function update(){
+
         WMText.alpha = FlxMath.lerp(WMText.alpha, WMTextVis ? 1 : 0.01, 0.05);
+        bg.alpha = WMText.alpha / 1.8;
         box.alpha = FlxMath.lerp(box.alpha, boxVis ? 1 : 0.01, 0.09);
         f.alpha = box.alpha;
         face.alpha = box.alpha;

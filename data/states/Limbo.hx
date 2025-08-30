@@ -51,7 +51,7 @@ function create(){
     bedHB = new FlxSprite(bed.x + 80,bed.y+15).makeGraphic(bed.width / 1.6, bed.height - 10, 0x00FFFFFF);
     add(bedHB);
     bed.alpha = 0.02;
-    niko = new FunkinSprite(200,0);
+    niko = new FunkinSprite(600,0);
     niko.frames = Paths.getSparrowAtlas("sprites/niko");
     
     add(niko);
@@ -103,13 +103,13 @@ function create(){
     
     } 
     if (skipcutscene == true) { 
-            // new FlxTimer().start(1,function(ee:FlxTimer){openSubState(new ModSubState("TalkingSubState", {dianumber: 0})); niko.moves = true; canWalk = false; initializedthis = true;});
+            new FlxTimer().start(1,function(ee:FlxTimer){openSubState(new ModSubState("TalkingSubState", {dianumber: 0})); niko.moves = true; canWalk = false; initializedthis = true;});
 
     }
 
-    canWalk = true;
-    niko.moves = true;
-    initializedthis = true;
+    // canWalk = true;
+    // niko.moves = true;
+    // initializedthis = true;
 }
 var curCut = 0;
 public function testHit(){
@@ -191,6 +191,7 @@ function stepTHing(){
 
 }
 function messageSequence(){
+                new FlxTimer().start(1,function(ee:FlxTimer){openSubState(new ModSubState("TalkingSubState", {dianumber: 2})); niko.moves = true; canWalk = false; initializedthis = true;});
 
 }
 function walkShit(){
@@ -293,7 +294,6 @@ function walkShit(){
 
 }
 function update(elapsed){
-    bed.alpha = 1;
     if(FlxG.keys.justPressed.E && canWalk == true){
         if(nikoLook.overlaps(computerHB)){
             openSubState(new ModSubState("TalkingSubState", {dianumber: 1}));
@@ -301,12 +301,12 @@ function update(elapsed){
         }
         if(nikoLook.overlaps(bedHB) && bed.alpha == 1  && goingtoSleep == false){
             if(niko.x >= bed.x){
-                niko.playAnim("right");
+                niko.playAnim("left");
             }
             if(niko.x <= bed.x){
-                niko.playAnim("left", true);
+                niko.playAnim("right", true);
             }
-            niko.playAnim("left");
+            // niko.playAnim("left");
             canWalk = false;
             niko.moves = false;
 
@@ -332,7 +332,7 @@ function update(elapsed){
     }
     // trace(FlxG.state.subState.scriptName);
     if(FlxG.keys.justPressed.M){
-        openSubState(new ModSubState("TalkingSubState", {dianumber: 1}));
+        openSubState(new ModSubState("TalkingSubState", {dianumber: 2}));
         canWalk = false;
     }
     niko.velocity.x = 0;

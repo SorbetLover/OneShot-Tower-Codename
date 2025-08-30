@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="computer.png">
+<SubTexture name="off0000" x="0" y="0" width="34" height="25" frameX="-1" frameY="-3" frameWidth="34" frameHeight="26" />
+<SubTexture name="outline0000" x="34" y="0" width="34" height="25" frameX="-1" frameY="-3" frameWidth="34" frameHeight="26" />
+<SubTexture name="idle0000" x="0" y="25" width="32" height="25" frameX="-1" frameY="-3" frameWidth="34" frameHeight="26" />
+<SubTexture name="idle0001" x="32" y="25" width="32" height="25" frameX="-1" frameY="-3" frameWidth="34" frameHeight="26" />
+<SubTexture name="idle0002" x="32" y="25" width="32" height="25" frameX="-1" frameY="-3" frameWidth="34" frameHeight="26" />
+<SubTexture name="idle0003" x="0" y="25" width="32" height="25" frameX="-1" frameY="-3" frameWidth="34" frameHeight="26" />
+</TextureAtlas>

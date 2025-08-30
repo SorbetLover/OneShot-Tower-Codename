@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="splash.png">
+<SubTexture name="idle0000" x="76" y="44" width="14" height="12" frameX="-38" frameY="-41" frameWidth="80" frameHeight="80" />
+<SubTexture name="idle0001" x="46" y="44" width="30" height="20" frameX="-30" frameY="-37" frameWidth="80" frameHeight="80" />
+<SubTexture name="idle0002" x="0" y="44" width="46" height="28" frameX="-22" frameY="-33" frameWidth="80" frameHeight="80" />
+<SubTexture name="idle0003" x="78" y="0" width="62" height="36" frameX="-14" frameY="-29" frameWidth="80" frameHeight="80" />
+<SubTexture name="idle0004" x="0" y="0" width="78" height="44" frameX="-6" frameY="-25" frameWidth="80" frameHeight="80" />
+<SubTexture name="idle0005" x="0" y="0" width="78" height="44" frameX="-6" frameY="-25" frameWidth="80" frameHeight="80" />
+</TextureAtlas>

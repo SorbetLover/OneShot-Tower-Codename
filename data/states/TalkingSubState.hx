@@ -1,7 +1,7 @@
 import flixel.text.FlxTextAlign;
 import flixel.addons.text.FlxTypeText;
 import flixel.input.keyboard.FlxKey;
-
+import funkin.backend.utils.DiscordUtil;
 var f:FlxSprite;
 var box:FlxSprite;
 var face:FunkinSprite;
@@ -14,7 +14,11 @@ var WMTextVis:Bool = false;
 var WMText:FlxText;
 var game:ModState;
 var bg:FlxSprite;
+
+var name:String = "Player";
+
 function create(){
+    trace(DiscordUtil.user.username);
     bg = new FlxSprite().makeGraphic(4000,4000,0xFF000000);
     add(bg);
     bg.scrollFactor.set(0,0);
@@ -84,18 +88,16 @@ function create(){
         bg.alpha = 0.7;
     }
 
-    
 }
 var shit = true;
 var lastSpace:Bool = false;
 
 var currentDialog:Int = 0;
 var doinText:Bool = false;
-var name:String = "Player";
+
 
 //////////////  face, text, pause time, has line break, boxVisible 
-var theDialogues = [ 
-        [ 
+var theDialogues = [[ 
                 [0,     "Is this... the inside of the Tower?",                                          0.5,    false,  true],
                 [8,     "It's... a lot darker than I thought...",                                       0.5,    false,  true],
                 [18,    "...Wait. \nWheres the sun?",                                                   1,      true,   true],
@@ -151,24 +153,31 @@ var theDialogues = [
                 [-100, "", 1,false,false],
                 [-100, "... ello",1, false,true],
                 [-100, "This is just a placeholder", 1, false, true],
+                [-100, "Cuz i wont make the end until i stop being lazy", 1, false, true],
                 [-100, "I hate dusan nemec", 1, false, true],
+                [-100, "adios", 1, false, true],
+
                 ["end"]
-        ]
-];
+        ]];
+        
+
 function event(ee){
     switch(ee){
         case 0:
             for(i in 0...game.members.length){
-                if(game.members[i].alpha == 0.02){
+                // if(game.members[i].alpha == 0.02){
+                if(game.members[i].ID == 400){
                     game.members[i].alpha = 1;
                     FlxG.sound.play(Paths.sound("pc_messagebox"));
                     currentDialog += 1;
                     theDialogueThing();
                 }
             }
+            WMTextVis = false;
         case 1:
             for(i in 0...game.members.length){
-                if(game.members[i].alpha == 0.999){
+                // if(game.members[i].alpha == 0.999){
+                if(game.members[i].ID == 300){
                     game.members[i].playAnim("off");
                     FlxG.sound.play(Paths.sound("pc_off"), true);
                     currentDialog += 1;
@@ -215,7 +224,9 @@ function theDialogueThing(){
         WMText.text = "";
     }
 }
+
 function update(){
+    
 
         WMText.alpha = FlxMath.lerp(WMText.alpha, WMTextVis ? 1 : 0.01, 0.05);
         bg.alpha = WMText.alpha / 1.8;

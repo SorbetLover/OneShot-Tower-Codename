@@ -1,5 +1,7 @@
 import flixel.FlxObject;
 import funkin.menus.ModSwitchMenu;
+import funkin.backend.utils.DiscordUtil;
+
 var niko:FunkinSprite;
 var stepSounds:Array = [];
 var computer:FunkinSprite;
@@ -12,11 +14,12 @@ var initializedthis:Bool = false;
 var bed:FunkinSprite;
 var bedHB:FlxSprite;
 var cutscene:Array = [];
-var skipcutscene = false;
+var skipcutscene = true;
 var goingtoSleep = false;
 
 function create(){
-    
+		DiscordUtil.call("onMenuLoaded", ["Main Menu"]);
+        DiscordUtil.changePresence("OneShot", "Tower", null);
     FlxG.sound.playMusic(Paths.music("Distant"));
     FlxG.sound.music.pitch = 0.55;
     for(i in [1,2,3,5,6]){
@@ -35,7 +38,7 @@ function create(){
     computer.scale.set(4,4);
     computer.updateHitbox();
     computer.immovable = true;
-    computer.alpha = 0.999;
+    // computer.alpha = 0.999;
     computerHB = new FlxSprite(computer.x, computer.y).makeGraphic(computer.width, computer.height + 40,0x00FFFFFF);
     add(computerHB);
 
@@ -110,6 +113,8 @@ function create(){
     // canWalk = true;
     // niko.moves = true;
     // initializedthis = true;
+    computer.ID = 300;
+    bed.ID = 400;
 }
 var curCut = 0;
 public function testHit(){

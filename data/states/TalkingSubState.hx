@@ -150,12 +150,8 @@ var theDialogues = [
                 [-1, "Please don't return to this world anymore."],
                 [-100, "", 1,false,false],
                 [-100, "... ello",1, false,true],
-                [-100, "This is just a placeholder... lmao", 1, false, true],
+                [-100, "This is just a placeholder", 1, false, true],
                 [-100, "I hate dusan nemec", 1, false, true],
-                [-100, "hah", 1, false, true],
-                [-100, "hah hah", 1, false, true],
-                [-100, "hah hah hah", 1, false, true],
-
                 ["end"]
         ]
 ];

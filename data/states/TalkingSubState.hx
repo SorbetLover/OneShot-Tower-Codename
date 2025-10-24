@@ -18,7 +18,6 @@ var bg:FlxSprite;
 var name:String = "Player";
 
 function create(){
-    trace(DiscordUtil.user.username);
     bg = new FlxSprite().makeGraphic(4000,4000,0xFF000000);
     add(bg);
     bg.scrollFactor.set(0,0);
@@ -47,14 +46,19 @@ function create(){
     f.y = box.y - (box.height / 2) + 20;
     
     face = new FunkinSprite();
-    face.frames = Paths.getSparrowAtlas("faces/niko");
+    if(data.dianumber == 2 || data.dianumber == 3){
+        face.frames = Paths.getSparrowAtlas("faces/alloy");
+    } else {
+            face.frames = Paths.getSparrowAtlas("faces/niko");
+    }
     add(face);
 
     face.scale.set(1.9,1.9);
 
     face.y = f.y + face.height /2 + 12;
     if(data.dianumber == 2){
-        face.loadGraphic(Paths.image("faces/alloy"));
+        // face.loadGraphic(Paths.image("faces/alloy"));
+    
         face.scale.set(2.1,2.1);
         face.y -= 5;
     }
@@ -63,6 +67,7 @@ function create(){
     face.animation.addByPrefix("idle", "idle", 1);
     face.animation.play("idle");
     face.animation.pause();
+
     text = new FlxTypeText(120,500, 850, "This is a test test... test?" + " " + theDialog, 
     35);
     add(text);
@@ -150,19 +155,31 @@ var theDialogues = [[
                 [-1, "And as for you, " + name + "..."],
                 [-1, "We're done here."],
                 [-1, "Please don't return to this world anymore."],
-                [-100, "", 1,false,false],
-                [-100, "... ello",1, false,true],
-                [-100, "This is just a placeholder", 1, false, true],
-                [-100, "Cuz i wont make the end until i stop being lazy", 1, false, true],
-                [-100, "I hate dusan nemec", 1, false, true],
-                [-100, "adios", 1, false, true],
+                [0, "", 1,false,false],
+                [4, "... ello",1, false,true],
+                [4, "This is just a placeholder", 1, false, true],
+                [4, "Cuz i wont make the end until i stop being lazy", 1, false, true],
+                [2, "I hate dusan nemec", 1, false, true],
+                [4, "adios", 1, false, true],
 
-                ["end"]
-        ]];
-        
+                [-2, 2, false, true]
+        ],
+        [
+                [3, "You still here?", 1, false, true],
+                [1, "Really, theres nothing here", 1, false, true],
+                [4, "F4 opens the mod selection", 1, false, true],
+                [4, "Or press P to reset the state", 1, false, true],
+                [4, "Or appreciate the view, do as you please", false, true],
+                [-2, -1, false, true]
+        ]
+        ];
+
+var preventbg = false;
 
 function event(ee){
     switch(ee){
+        case -1:
+            close();
         case 0:
             for(i in 0...game.members.length){
                 // if(game.members[i].alpha == 0.02){
@@ -184,15 +201,18 @@ function event(ee){
                     theDialogueThing();
                 }
             }
-
+        case 2:
+            preventbg = true;
+            new FlxTimer().start(10, function(){
+                
+                openSubState(new ModSubState("TalkingSubState", {dianumber: 3}));
+            });
     }
 }
 function theDialogueThing(){
 
-    if(theDialogues[data.dianumber][currentDialog][0] == "end"){
-        close();
-    }
-    if(theDialogues[data.dianumber][currentDialog][0] >= 0 || theDialogues[data.dianumber][currentDialog][0] == -100  ) {    
+
+    if(theDialogues[data.dianumber][currentDialog][0] >= 0 || theDialogues[data.dianumber][currentDialog][0] == -100) {    
                 textSound.play(true);
     
             WMTextVis = false;
@@ -206,7 +226,7 @@ function theDialogueThing(){
             } else {
                 boxVis = true;
             }
-            if(data.dianumber != 2) face.animation.curAnim.curFrame = theDialogues[data.dianumber][currentDialog][0];
+            face.animation.curAnim.curFrame = theDialogues[data.dianumber][currentDialog][0];
             text.start(0.02, true, false, {}, function(){
                 doinText = false;
             });
@@ -223,6 +243,12 @@ function theDialogueThing(){
         event(theDialogues[data.dianumber][currentDialog][1]);
         WMText.text = "";
     }
+    if(theDialogues[data.dianumber][currentDialog][0] == "-1") {
+        bg.visible = true;
+    } else {
+        bg.visible = false;
+    }
+
 }
 
 function update(){
@@ -234,6 +260,9 @@ function update(){
         f.alpha = box.alpha;
         face.alpha = box.alpha;
     if(FlxG.keys.justPressed.SPACE){
+        if(theDialogues[data.dianumber][currentDialog][0] == "end"){
+            close();
+        }
         currentDialog += 1;
         theDialogueThing();
     }
@@ -257,4 +286,11 @@ function update(){
             });
         });
     }
+    
+    if(data.dianumber >= 2 && box.alpha >= 0.02){
+        bg.visible = false;
+    } else {
+        bg.visible = true;
+    }
+    if(preventbg) bg.visible = false;
 }

@@ -14,7 +14,7 @@ var initializedthis:Bool = false;
 var bed:FunkinSprite;
 var bedHB:FlxSprite;
 var cutscene:Array = [];
-var skipcutscene = false;
+var skipcutscene = true;
 var goingtoSleep = false;
 
 function create(){
